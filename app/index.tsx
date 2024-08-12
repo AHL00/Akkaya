@@ -1,14 +1,18 @@
-import { Image, StyleSheet, Platform, SafeAreaView, Animated, Button, View } from "react-native";
+import { Image, StyleSheet, Platform, SafeAreaView, Animated, Button, View, Pressable } from "react-native";
 
-import { HelloWave } from "@/components/HelloWave";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { Link, useRouter } from "expo-router";
+import { Link, Stack, useRouter } from "expo-router";
 import { Letter } from "@/constants/Letters";
+import { Canvas } from "@benjeau/react-native-draw";
 
 export default function HomeScreen() {
   return (
+    // <Stack>
+    //   <Stack.Screen name="draw" options={{ headerShown: false }} />
+    //   <Stack.Sc${Letter.KAGYI}reen name="+not-found" />
+    // </Stack>
     <ParallaxScrollView>
       <ThemedText type="title">Hello, World!</ThemedText>
       {/* <Button
@@ -18,8 +22,11 @@ export default function HomeScreen() {
           router.push("/draw");
         }}
       /> */}
-
-      <Link href="/draw">Draw</Link>
+      <Link push href={{ pathname: "/draw/[letter]", params: { letter: `${Letter.KAGYI}` } }}>
+        <Pressable>
+          <ThemedText type="subtitle">Draw</ThemedText>
+        </Pressable>
+      </Link>
     </ParallaxScrollView>
   );
 }
