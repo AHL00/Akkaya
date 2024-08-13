@@ -821,13 +821,6 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@benjeau/react-native-draw@^0.8.3":
-  version "0.8.3"
-  resolved "https://registry.yarnpkg.com/@benjeau/react-native-draw/-/react-native-draw-0.8.3.tgz#37ccc2b38d4fe26ee8150d753312835062ea03fa"
-  integrity sha512-3VvIkBPyZ+WuGzMBww3aDmSdyJXelRuqaQ55WLqedpRgUdWWVhIneguL4824gRVKotD2u1eDfe5avnvHb2/CDQ==
-  dependencies:
-    "@luncheon/simplify-svg-path" "^0.1.4"
-
 "@egjs/hammerjs@^2.0.17":
   version "2.0.17"
   resolved "https://registry.yarnpkg.com/@egjs/hammerjs/-/hammerjs-2.0.17.tgz#5dc02af75a6a06e4c2db0202cae38c9263895124"
@@ -1479,11 +1472,6 @@
   dependencies:
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
-
-"@luncheon/simplify-svg-path@^0.1.4":
-  version "0.1.5"
-  resolved "https://registry.yarnpkg.com/@luncheon/simplify-svg-path/-/simplify-svg-path-0.1.5.tgz#ec7d3fbc7e6cc06f7696d846a4b310000e2552a1"
-  integrity sha512-D7oBkAz65OfFgHBRuQ2eXhm/+pQcYyC41jE+TJ4Hi/5+12qgG1mzk0DMpTKVsqJLYn8gbq9roUSLbaEy4M5MRw==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
