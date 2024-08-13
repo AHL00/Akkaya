@@ -1,10 +1,18 @@
-import { LetterSvgs } from "@/constants/Letters";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, StyleSheet, PanResponder, Dimensions } from "react-native";
 import Svg, { Path, SvgCss, SvgUri, SvgXml } from "react-native-svg";
 import simplify from "simplify-js";
+import * as FileSystem from "expo-file-system";
+import { Asset } from "expo-asset";
+import { Character } from "@/constants/Character";
 
-const DrawingCanvas = (props: any) => {
+type DrawingCanvasProps = {
+  char: Character;
+  lineWidth: number;
+  svgModuleId: number | string;
+};
+
+const DrawingCanvas = (props: DrawingCanvasProps) => {
   const [paths, setPaths] = useState<string[]>([]);
   const [currentPoints, setCurrentPoints] = useState<{ x: number; y: number }[]>([]);
   const lineWidth = props.lineWidth ? props.lineWidth : 20;
@@ -32,7 +40,29 @@ const DrawingCanvas = (props: any) => {
     },
   });
 
-  let svg = LetterSvgs[props.letter];
+  const [svgContent, setSvgContent] = useState<string | null>(null);
+
+  useEffect(() => {
+    console.log("Loading SVG file: ", props.svgModuleId);
+
+    const loadSvg = async () => {
+      try {
+        const [{ localUri }] = await Asset.loadAsync(props.svgModuleId);
+
+        if (!localUri) {
+          throw new Error("Failed to load SVG file");
+        }
+
+        const content = await FileSystem.readAsStringAsync(localUri);
+
+        setSvgContent(content);
+      } catch (error) {
+        console.error("Error reading SVG file:", error);
+      }
+    };
+
+    loadSvg();
+  }, [props.svgModuleId]);
 
   let dimensions = Dimensions.get("window");
 
@@ -78,8 +108,7 @@ const DrawingCanvas = (props: any) => {
         )}
       </Svg>
 
-      <SvgXml style={styles.template} xml={svg} width={dimensions.width * 0.8} height={dimensions.height}></SvgXml>
-
+      {svgContent && <SvgXml style={styles.template} xml={svgContent} width={dimensions.width * 0.8} height={dimensions.height} />}
       {/* <SvgUri style={styles.template} uri={props} /> */}
     </View>
   );

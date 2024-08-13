@@ -1,18 +1,21 @@
 import DrawingCanvas from "@/components/DrawingCanvas";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
+import { getSvgModuleId } from "@/constants/Character";
 import { Letter } from "@/constants/Letters";
 import { useLocalSearchParams } from "expo-router";
 import { StyleSheet } from "react-native";
 
 export default function DrawPage() {
-  const { letter } = useLocalSearchParams();
+  const { slug } = useLocalSearchParams();
+
+    let char = Letter.KAGYI;
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title">Draw the letter {letter}</ThemedText>
+      <ThemedText type="title">Draw the letter {slug}</ThemedText>
       {/* <Canvas thickness={25} /> */}
-        <DrawingCanvas letter={Letter.KAGYI} lineWidth={40}></DrawingCanvas>
+        <DrawingCanvas char={char} lineWidth={40} svgModuleId={getSvgModuleId(char)}></DrawingCanvas>
     </ThemedView>
   );
 }
