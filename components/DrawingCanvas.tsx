@@ -5,6 +5,9 @@ import simplify from "simplify-js";
 import * as FileSystem from "expo-file-system";
 import { Asset } from "expo-asset";
 import { Character, characterScaling } from "@/constants/Character";
+import { importFromSvg as importCharPathFromSvg } from "@/app/char_path";
+import { loadAsset } from "@/app/load_asset";
+import { CharacterPath } from "@/app/char_path";
 
 type DrawingCanvasProps = {
   char: Character;
@@ -18,6 +21,8 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
   const lineWidth = props.lineWidth ? props.lineWidth : 20;
   const canvasRef = useRef<View>(null);
   const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 });
+  const [charPath, setCharPath] = useState<CharacterPath | null>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -25,6 +30,18 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
         setCanvasPosition({ x: pageX, y: pageY });
       });
     }
+
+    loadAsset(require("@/assets/chars/paths/a_path.svg"))
+      .then((data) => {
+        let char_path = importCharPathFromSvg(data);
+
+        console.log("Loaded character path: ", char_path);
+
+        setCharPath(char_path);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   const panResponder = PanResponder.create({
@@ -34,10 +51,12 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
       setCurrentPoints([{ x: x0 - canvasPosition.x, y: y0 - canvasPosition.y }]);
     },
     onPanResponderMove: (evt, gestureState) => {
+      if (!ready) return;
       const { moveX, moveY } = gestureState;
       setCurrentPoints((prevPoints) => [...prevPoints, { x: moveX - canvasPosition.x, y: moveY - canvasPosition.y }]);
     },
     onPanResponderRelease: () => {
+      if (!ready) return;
       const simplifiedPoints = simplify(currentPoints, 1, true);
       const path = simplifiedPoints
         .map((point, index) => {
@@ -74,6 +93,12 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
     loadSvg();
   }, [props.svgModuleId]);
 
+  useEffect(() => {
+    if (charPath != null && svgContent != null) {
+      setReady(true);
+    }
+  }, [charPath, svgContent]);
+
   let dimensions = Dimensions.get("window");
 
   let styles = StyleSheet.create({
@@ -103,28 +128,29 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
 
   return (
     <View ref={canvasRef} style={styles.container} {...panResponder.panHandlers}>
-      <Svg style={styles.svg}>
-        {paths.map((path, index) => (
-          <Path key={index} d={path} stroke="black" strokeWidth={lineWidth} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-        ))}
-        {currentPoints.length > 0 && (
-          <Path
-            d={currentPoints
-              .map((point, index) => {
-                return index === 0 ? `M${point.x},${point.y}` : `L${point.x},${point.y}`;
-              })
-              .join(" ")}
-            stroke="black"
-            strokeWidth={lineWidth}
-            fill="none"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        )}
-      </Svg>
+      {ready && (
+        <Svg style={styles.svg}>
+          {paths.map((path, index) => (
+            <Path key={index} d={path} stroke="black" strokeWidth={lineWidth} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+          ))}
+          {currentPoints.length > 0 && (
+            <Path
+              d={currentPoints
+                .map((point, index) => {
+                  return index === 0 ? `M${point.x},${point.y}` : `L${point.x},${point.y}`;
+                })
+                .join(" ")}
+              stroke="black"
+              strokeWidth={lineWidth}
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          )}
+        </Svg>
+      )}
 
-      {svgContent && <SvgXml style={styles.template} xml={svgContent} width={dimensions.width * (charScale[0] - margin)} height={dimensions.height * (charScale[1] - margin)} />}
-      {/* <SvgUri style={styles.template} uri={props} /> */}
+      {ready && svgContent && <SvgXml style={styles.template} xml={svgContent} width={dimensions.width * (charScale[0] - margin)} height={dimensions.height * (charScale[1] - margin)} />}
     </View>
   );
 };

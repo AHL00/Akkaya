@@ -23,7 +23,7 @@ export const getSvgModuleId = (char: Character): number | string => {
 // x and y components
 export const characterScaling: Record<Character, [number, number]> = {
     [Letter.KAGYI]: [0.9, 0.9],
-    [Letter.KHAGWE]: [0.65, 0.65],
+    [Letter.KHAGWE]: [0.6, 0.6],
     [Letter.GANGE]: [1, 1],
     [Letter.GHAGYI]: [1, 1],
     [Letter.NGA]: [1, 1],

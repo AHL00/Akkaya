@@ -5,24 +5,12 @@ import { ThemedView } from "@/components/ThemedView";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { Link, Stack, useRouter } from "expo-router";
 import { Letter, LetterSvgs } from "@/constants/Letters";
-import { Asset } from "expo-asset";
 import { useCallback, useEffect, useState } from "react";
-import * as FileSystem from "expo-file-system";
 import { SvgXml } from "react-native-svg";
 import { Character } from "@/constants/Character";
 import { NumberSvgs } from "@/constants/Numbers";
+import { loadAsset } from "./load_asset";
 
-export const loadAsset = async (moduleId: number | string): Promise<string> => {
-  const [{ localUri }] = await Asset.loadAsync(moduleId);
-
-  if (!localUri) {
-    throw new Error(`Failed to load asset for module id: ${moduleId}`);
-  }
-
-  let svgData = await FileSystem.readAsStringAsync(localUri);
-
-  return svgData;
-};
 
 type SvgModuleTuple = [Letter, string | number];
 
@@ -57,7 +45,7 @@ export default function HomeScreen() {
         {charSvgs.map((charSvg, index) => (
           <Link key={index} asChild push href={{ pathname: "/draw/[slug]", params: { slug: charSvg[0] } }}>
             <Pressable style={styles.gridItem}>
-              <SvgXml xml={charSvg[1]} width="100%" height="70%" />
+              <SvgXml xml={charSvg[1]} width="80%" height="50%" />
               <ThemedText type="subtitle">{`Draw ${charSvg[0]}`}</ThemedText>
             </Pressable>
           </Link>

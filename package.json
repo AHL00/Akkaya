@@ -39,7 +39,8 @@
     "react-native-skia": "^0.0.1",
     "react-native-svg": "^15.5.0",
     "react-native-web": "~0.19.10",
-    "simplify-js": "^1.2.4"
+    "simplify-js": "^1.2.4",
+    "svgson": "^5.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
