@@ -13,7 +13,7 @@ export default function DrawPage() {
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText type="title">Draw the letter {slug}</ThemedText>
+      <ThemedText style={styles.title} type="title">Draw the letter {slug}</ThemedText>
       {/* <Canvas thickness={25} /> */}
         <DrawingCanvas char={char} lineWidth={40} svgModuleId={getSvgModuleId(char)}></DrawingCanvas>
     </ThemedView>
@@ -28,4 +28,9 @@ const styles = StyleSheet.create({
     padding: 0,
     height: "100%",
   },
+  title: {
+    position: "absolute",
+    top: 0,
+    marginHorizontal: "auto",
+  }
 });

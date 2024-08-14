@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, PanResponder, Dimensions } from "react-native";
 import Svg, { Path, SvgCss, SvgUri, SvgXml } from "react-native-svg";
 import simplify from "simplify-js";
@@ -16,16 +16,26 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
   const [paths, setPaths] = useState<string[]>([]);
   const [currentPoints, setCurrentPoints] = useState<{ x: number; y: number }[]>([]);
   const lineWidth = props.lineWidth ? props.lineWidth : 20;
+  const canvasRef = useRef<View>(null);
+  const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    if (canvasRef.current) {
+      canvasRef.current.measure((x, y, width, height, pageX, pageY) => {
+        setCanvasPosition({ x: pageX, y: pageY });
+      });
+    }
+  }, []);
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderGrant: (evt, gestureState) => {
       const { x0, y0 } = gestureState;
-      setCurrentPoints([{ x: x0, y: y0 }]);
+      setCurrentPoints([{ x: x0 - canvasPosition.x, y: y0 - canvasPosition.y }]);
     },
     onPanResponderMove: (evt, gestureState) => {
       const { moveX, moveY } = gestureState;
-      setCurrentPoints((prevPoints) => [...prevPoints, { x: moveX, y: moveY }]);
+      setCurrentPoints((prevPoints) => [...prevPoints, { x: moveX - canvasPosition.x, y: moveY - canvasPosition.y }]);
     },
     onPanResponderRelease: () => {
       const simplifiedPoints = simplify(currentPoints, 1, true);
@@ -87,7 +97,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
   });
 
   return (
-    <View style={styles.container} {...panResponder.panHandlers}>
+    <View ref={canvasRef} style={styles.container} {...panResponder.panHandlers}>
       <Svg style={styles.svg}>
         {paths.map((path, index) => (
           <Path key={index} d={path} stroke="black" strokeWidth={lineWidth} fill="none" strokeLinecap="round" strokeLinejoin="round" />
