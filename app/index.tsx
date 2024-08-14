@@ -10,6 +10,7 @@ import { useCallback, useEffect, useState } from "react";
 import * as FileSystem from "expo-file-system";
 import { SvgXml } from "react-native-svg";
 import { Character } from "@/constants/Character";
+import { NumberSvgs } from "@/constants/Numbers";
 
 export const loadAsset = async (moduleId: number | string): Promise<string> => {
   const [{ localUri }] = await Asset.loadAsync(moduleId);
@@ -32,6 +33,12 @@ export default function HomeScreen() {
     const loadSvgs = async () => {
       let charSvgsTemp: [Letter, string][] = [];
       for (let i of Object.entries(LetterSvgs)) {
+        let svgData = await loadAsset(i[1]);
+
+        // @ts-ignore
+        charSvgsTemp.push([i[0], svgData]);
+      }
+      for (let i of Object.entries(NumberSvgs)) {
         let svgData = await loadAsset(i[1]);
 
         // @ts-ignore
