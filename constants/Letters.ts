@@ -55,8 +55,9 @@ import Svg from 'react-native-svg';
 
 /// number | string refers to the module id of the svg file
 export const LetterSvgs: Record<Letter, number | string> = {
-    [Letter.KAGYI]: require('@/assets/chars/က.svg'),
-    [Letter.KHAGWE]: require('@/assets/chars/ခ.svg'),
+    [Letter.KAGYI]: require('@/assets/chars/kagwe.svg'),
+    [Letter.KHAGWE]: require('@/assets/chars/khagwe.svg'),
+
     // [Letter.GANGE]: require('@/assets/chars/ဂ.svg'),
     // [Letter.GHAGYI]: require('@/assets/chars/ဃ.svg'),
     // [Letter.NGA]: require('@/assets/chars/င.svg'),
