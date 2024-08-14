@@ -8,14 +8,16 @@ import { StyleSheet } from "react-native";
 
 export default function DrawPage() {
   const { slug } = useLocalSearchParams();
-
-    let char = Letter.KAGYI;
+  // @ts-ignore
+  let char: Letter = slug;
 
   return (
     <ThemedView style={styles.container}>
-      <ThemedText style={styles.title} type="title">Draw the letter {slug}</ThemedText>
+      <ThemedText style={styles.title} type="title">
+        Draw the letter {slug}
+      </ThemedText>
       {/* <Canvas thickness={25} /> */}
-        <DrawingCanvas char={char} lineWidth={40} svgModuleId={getSvgModuleId(char)}></DrawingCanvas>
+      <DrawingCanvas char={char} lineWidth={40} svgModuleId={getSvgModuleId(char)}></DrawingCanvas>
     </ThemedView>
   );
 }
@@ -32,5 +34,5 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: 0,
     marginHorizontal: "auto",
-  }
+  },
 });
