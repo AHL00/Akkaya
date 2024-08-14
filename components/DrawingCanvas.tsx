@@ -4,7 +4,7 @@ import Svg, { Path, SvgCss, SvgUri, SvgXml } from "react-native-svg";
 import simplify from "simplify-js";
 import * as FileSystem from "expo-file-system";
 import { Asset } from "expo-asset";
-import { Character } from "@/constants/Character";
+import { Character, characterScaling } from "@/constants/Character";
 
 type DrawingCanvasProps = {
   char: Character;
@@ -82,6 +82,8 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
       backgroundColor: "#ffffff00",
       width: "100%",
       height: "100%",
+      alignItems: "center",
+      justifyContent: "center",
     },
     template: {
       // Absolute, centered, and 80% of the screen width
@@ -89,12 +91,15 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
       // top: "50%",
       // left: "50%",
       // transform: [{ translateX: "-50%" }, { translateY: "-50%" }],
-      marginLeft: (dimensions.width - dimensions.width * 0.8) / 2,
+      //   marginLeft: (dimensions.width - dimensions.width * 0.8) / 2,
     },
     svg: {
       flex: 1,
     },
   });
+
+  const charScale = characterScaling[props.char];
+  const margin = 0.1;
 
   return (
     <View ref={canvasRef} style={styles.container} {...panResponder.panHandlers}>
@@ -118,7 +123,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
         )}
       </Svg>
 
-      {svgContent && <SvgXml style={styles.template} xml={svgContent} width={dimensions.width * 0.8} height={dimensions.height} />}
+      {svgContent && <SvgXml style={styles.template} xml={svgContent} width={dimensions.width * (charScale[0] - margin)} height={dimensions.height * (charScale[1] - margin)} />}
       {/* <SvgUri style={styles.template} uri={props} /> */}
     </View>
   );
