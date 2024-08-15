@@ -1,4 +1,4 @@
-import { Letter, LetterSvgs } from "./Letters";
+import { Letter, LetterPathSvgs, LetterSvgs } from "./Letters";
 import { NumberChar, NumberSvgs } from "./Numbers";
 
 export type Character = NumberChar | Letter;
@@ -16,6 +16,15 @@ export const getSvgModuleId = (char: Character): number | string => {
         return LetterSvgs[char];
     } else {
         return NumberSvgs[char];
+    }
+}
+
+export const getPathSvgModuleId = (char: Character): number | string => {
+    if (isLetter(char)) {
+        return LetterPathSvgs[char];
+    } else {
+        return 0;
+        // return NumberSvgs[char];
     }
 }
 

@@ -1,6 +1,7 @@
 export type PathCheckpoint = { x: number; y: number; radius: number };
 export type Stroke = PathCheckpoint[];
-export type CharacterPath = Stroke[];
+export type CharacterBounds = [number, number];
+export type CharacterPath = [Stroke[], CharacterBounds];
 
 const { parse } = require('svgson')
 
@@ -23,6 +24,22 @@ const { parse } = require('svgson')
 export const importFromSvg = (svg: string): CharacterPath => {
     let svg_json = parse(svg);
 
+    let width = svg_json["_j"]["attributes"]["width"];
+    let height = svg_json["_j"]["attributes"]["height"];
+
+    // Strip the px if it exists
+    if (width.includes("px")) {
+        width = width.slice(0, -2);
+    }
+
+    if (height.includes("px")) {
+        height = height.slice(0, -2);
+    }
+
+    // Parse the floats
+    width = parseFloat(width);
+    height = parseFloat(height);
+
     let svg_els = svg_json["_j"]["children"];
 
     let current_stroke = [];
@@ -44,5 +61,5 @@ export const importFromSvg = (svg: string): CharacterPath => {
         }
     }
 
-    return path;
+    return [path, [width, height]];
 }
