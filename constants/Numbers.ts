@@ -26,3 +26,16 @@ export const NumberSvgs: Record<NumberChar, number | string> = {
     [NumberChar.EIGHT]: require('@/assets/chars/eight.svg'),
     [NumberChar.NINE]: require('@/assets/chars/nine.svg'),
 }
+
+export const NumberPathSvgs: Record<NumberChar, number | string> = {
+    [NumberChar.ZERO]: require('@/assets/chars/paths/a.svg'),
+    [NumberChar.ONE]: require('@/assets/chars/paths/a.svg'),
+    [NumberChar.TWO]: require('@/assets/chars/paths/a.svg'),
+    [NumberChar.THREE]: require('@/assets/chars/paths/a.svg'),
+    [NumberChar.FOUR]: require('@/assets/chars/paths/a.svg'),
+    [NumberChar.FIVE]: require('@/assets/chars/paths/a.svg'),
+    [NumberChar.SIX]: require('@/assets/chars/paths/a.svg'),
+    [NumberChar.SEVEN]: require('@/assets/chars/paths/a.svg'),
+    [NumberChar.EIGHT]: require('@/assets/chars/paths/a.svg'),
+    [NumberChar.NINE]: require('@/assets/chars/paths/a.svg'),
+}
