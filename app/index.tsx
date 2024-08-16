@@ -1,32 +1,33 @@
-import { Image, StyleSheet, Platform, SafeAreaView, Animated, Button, View, Pressable, Dimensions } from "react-native";
+import {
+  Image,
+  StyleSheet,
+  Platform,
+  SafeAreaView,
+  Animated,
+  Button,
+  View,
+  Pressable,
+  Dimensions,
+} from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { Link, Stack, useRouter } from "expo-router";
-import { Letter, LetterSvgs } from "@/constants/Letters";
 import { useCallback, useEffect, useState } from "react";
 import { SvgXml } from "react-native-svg";
-import { Character } from "@/constants/Character";
-import { NumberSvgs } from "@/constants/Numbers";
+import { Character, characterSvgs } from "@/constants/Character";
 import { loadAsset } from "./load_asset";
 
-
-type SvgModuleTuple = [Letter, string | number];
+type SvgModuleTuple = [Character, string | number];
 
 export default function HomeScreen() {
-  let [charSvgs, setCharSvgs] = useState<[Letter, string][]>([]);
+  let [charSvgs, setCharSvgs] = useState<[Character, string][]>([]);
 
   useEffect(() => {
     const loadSvgs = async () => {
-      let charSvgsTemp: [Letter, string][] = [];
-      for (let i of Object.entries(LetterSvgs)) {
-        let svgData = await loadAsset(i[1]);
-
-        // @ts-ignore
-        charSvgsTemp.push([i[0], svgData]);
-      }
-      for (let i of Object.entries(NumberSvgs)) {
+      let charSvgsTemp: [Character, string][] = [];
+      for (let i of Object.entries(characterSvgs)) {
         let svgData = await loadAsset(i[1]);
 
         // @ts-ignore
@@ -43,7 +44,12 @@ export default function HomeScreen() {
       <ThemedText type="title">Hello, World!</ThemedText>
       <View style={styles.gridContainer}>
         {charSvgs.map((charSvg, index) => (
-          <Link key={index} asChild push href={{ pathname: "/draw/[slug]", params: { slug: charSvg[0] } }}>
+          <Link
+            key={index}
+            asChild
+            push
+            href={{ pathname: "/draw/[slug]", params: { slug: charSvg[0] } }}
+          >
             <Pressable style={styles.gridItem}>
               <SvgXml xml={charSvg[1]} width="80%" height="50%" />
               <ThemedText type="subtitle">{`Draw ${charSvg[0]}`}</ThemedText>

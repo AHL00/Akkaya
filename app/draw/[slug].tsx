@@ -1,7 +1,7 @@
 import DrawingCanvas from "@/components/DrawingCanvas";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { getPathSvgModuleId, getSvgModuleId } from "@/constants/Character";
+import { characterPathSvg as characterPathSvgs, characterSvgs } from "@/constants/Character";
 import { Letter } from "@/constants/Letters";
 import { useLocalSearchParams } from "expo-router";
 import { StyleSheet } from "react-native";
@@ -19,8 +19,8 @@ export default function DrawPage() {
       <DrawingCanvas
         char={char}
         lineWidth={40}
-        svgModuleId={getSvgModuleId(char)}
-        pathSvgModuleId={getPathSvgModuleId(char)}
+        svgModuleId={characterSvgs[char]}
+        pathSvgModuleId={characterPathSvgs[char]}
       ></DrawingCanvas>
     </ThemedView>
   );

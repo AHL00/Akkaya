@@ -1,77 +1,155 @@
-import { Letter, LetterPathSvgs, LetterSvgs } from "./Letters";
-import { NumberChar, NumberPathSvgs, NumberSvgs } from "./Numbers";
+import { Letter } from "./Letters";
+import { NumberChar } from "./Numbers";
 
 export type Character = NumberChar | Letter;
 
 export const isLetter = (char: Character): char is Letter => {
-    return Object.values(Letter).includes(char as Letter);
-}
+  return Object.values(Letter).includes(char as Letter);
+};
 
 export const isNumber = (char: Character): char is NumberChar => {
-    return Object.values(NumberChar).includes(char as NumberChar);
-}
+  return Object.values(NumberChar).includes(char as NumberChar);
+};
 
-export const getSvgModuleId = (char: Character): number | string => {
-    if (isLetter(char)) {
-        return LetterSvgs[char];
-    } else {
-        return NumberSvgs[char];
-    }
-}
+export const characterSvgs: Record<Character, number | string> = {
+  [Letter.KAGYI]: require("@/assets/chars/kagyi.svg"),
+  [Letter.KHAGWE]: require("@/assets/chars/khagwe.svg"),
+  [Letter.GANGE]: require("@/assets/chars/gange.svg"),
+  [Letter.GHAGYI]: require("@/assets/chars/ghagyi.svg"),
+  [Letter.NGA]: require("@/assets/chars/nga.svg"),
+  [Letter.SALONE]: require("@/assets/chars/salone.svg"),
+  [Letter.SALEIN]: require("@/assets/chars/salein.svg"),
+  [Letter.ZAGWE]: require("@/assets/chars/zagwe.svg"),
+  [Letter.ZAMYINZWE]: require("@/assets/chars/zamyinzwe.svg"),
+  [Letter.NYA]: require("@/assets/chars/nya.svg"),
+  [Letter.NNYA]: require("@/assets/chars/nnya.svg"),
+  [Letter.TTA]: require("@/assets/chars/tta.svg"),
+  [Letter.TTHA]: require("@/assets/chars/ttha.svg"),
+  [Letter.DDA]: require("@/assets/chars/dda.svg"),
+  [Letter.DDHA]: require("@/assets/chars/ddha.svg"),
+  [Letter.NNA]: require("@/assets/chars/nna.svg"),
+  [Letter.TA]: require("@/assets/chars/ta.svg"),
+  [Letter.THA]: require("@/assets/chars/tha.svg"),
+  [Letter.DA]: require("@/assets/chars/da.svg"),
+  [Letter.DHA]: require("@/assets/chars/dha.svg"),
+  [Letter.NA]: require("@/assets/chars/na.svg"),
+  [Letter.PA]: require("@/assets/chars/pa.svg"),
+  [Letter.PHA]: require("@/assets/chars/pha.svg"),
+  [Letter.BA]: require("@/assets/chars/ba.svg"),
+  [Letter.BHA]: require("@/assets/chars/bha.svg"),
+  [Letter.MA]: require("@/assets/chars/ma.svg"),
+  [Letter.YA]: require("@/assets/chars/ya.svg"),
+  [Letter.RA]: require("@/assets/chars/ra.svg"),
+  [Letter.LA]: require("@/assets/chars/la.svg"),
+  [Letter.WA]: require("@/assets/chars/wa.svg"),
+  [Letter.SA]: require("@/assets/chars/sa.svg"),
+  [Letter.HA]: require("@/assets/chars/ha.svg"),
+  [Letter.LLA]: require("@/assets/chars/lla.svg"),
+  [Letter.A]: require("@/assets/chars/a.svg"),
+  [NumberChar.ZERO]: require("@/assets/chars/zero.svg"),
+  [NumberChar.ONE]: require("@/assets/chars/one.svg"),
+  [NumberChar.TWO]: require("@/assets/chars/two.svg"),
+  [NumberChar.THREE]: require("@/assets/chars/three.svg"),
+  [NumberChar.FOUR]: require("@/assets/chars/four.svg"),
+  [NumberChar.FIVE]: require("@/assets/chars/five.svg"),
+  [NumberChar.SIX]: require("@/assets/chars/six.svg"),
+  [NumberChar.SEVEN]: require("@/assets/chars/seven.svg"),
+  [NumberChar.EIGHT]: require("@/assets/chars/eight.svg"),
+  [NumberChar.NINE]: require("@/assets/chars/nine.svg"),
+};
 
-export const getPathSvgModuleId = (char: Character): number | string => {
-    if (isLetter(char)) {
-        return LetterPathSvgs[char];
-    } else {
-        return NumberPathSvgs[char];
-    }
-}
+export const characterPathSvg: Record<Character, number | string> = {
+  [Letter.A]: require("@/assets/chars/paths/a.svg"),
+  [Letter.KAGYI]: require("@/assets/chars/paths/a.svg"),
+  [Letter.KHAGWE]: require("@/assets/chars/paths/a.svg"),
+  [Letter.GANGE]: require("@/assets/chars/paths/a.svg"),
+  [Letter.GHAGYI]: require("@/assets/chars/paths/a.svg"),
+  [Letter.NGA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.SALONE]: require("@/assets/chars/paths/a.svg"),
+  [Letter.SALEIN]: require("@/assets/chars/paths/a.svg"),
+  [Letter.ZAGWE]: require("@/assets/chars/paths/a.svg"),
+  [Letter.ZAMYINZWE]: require("@/assets/chars/paths/a.svg"),
+  [Letter.NYA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.NNYA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.TTA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.TTHA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.DDA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.DDHA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.NNA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.TA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.THA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.DA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.DHA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.NA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.PA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.PHA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.BA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.BHA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.MA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.YA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.RA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.LA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.WA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.SA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.HA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.LLA]: require("@/assets/chars/paths/a.svg"),
+  [NumberChar.ZERO]: require("@/assets/chars/paths/a.svg"),
+  [NumberChar.ONE]: require("@/assets/chars/paths/a.svg"),
+  [NumberChar.TWO]: require("@/assets/chars/paths/a.svg"),
+  [NumberChar.THREE]: require("@/assets/chars/paths/a.svg"),
+  [NumberChar.FOUR]: require("@/assets/chars/paths/a.svg"),
+  [NumberChar.FIVE]: require("@/assets/chars/paths/a.svg"),
+  [NumberChar.SIX]: require("@/assets/chars/paths/a.svg"),
+  [NumberChar.SEVEN]: require("@/assets/chars/paths/a.svg"),
+  [NumberChar.EIGHT]: require("@/assets/chars/paths/a.svg"),
+  [NumberChar.NINE]: require("@/assets/chars/paths/a.svg"),
+};
 
 // 0 <-> 1
 // x and y components
 export const characterScaling: Record<Character, [number, number]> = {
-    [Letter.KAGYI]: [0.9, 0.9],
-    [Letter.KHAGWE]: [0.6, 0.6],
-    [Letter.GANGE]: [1, 1],
-    [Letter.GHAGYI]: [1, 1],
-    [Letter.NGA]: [1, 1],
-    [Letter.SALONE]: [1, 1],
-    [Letter.SALEIN]: [1, 1],
-    [Letter.ZAGWE]: [1, 1],
-    [Letter.ZAMYINZWE]: [1, 1],
-    [Letter.NYA]: [1, 1],
-    [Letter.NNYA]: [1, 1],
-    [Letter.TTA]: [1, 1],
-    [Letter.TTHA]: [1, 1],
-    [Letter.DDA]: [1, 1],
-    [Letter.DDHA]: [1, 1],
-    [Letter.NNA]: [1, 1],
-    [Letter.TA]: [1, 1],
-    [Letter.THA]: [1, 1],
-    [Letter.DA]: [1, 1],
-    [Letter.DHA]: [1, 1],
-    [Letter.NA]: [1, 1],
-    [Letter.PA]: [1, 1],
-    [Letter.PHA]: [1, 1],
-    [Letter.BA]: [1, 1],
-    [Letter.BHA]: [1, 1],
-    [Letter.MA]: [1, 1],
-    [Letter.YA]: [1, 1],
-    [Letter.RA]: [1, 1],
-    [Letter.LA]: [1, 1],
-    [Letter.WA]: [1, 1],
-    [Letter.SA]: [1, 1],
-    [Letter.HA]: [1, 1],
-    [Letter.LLA]: [1, 1],
-    [Letter.A]: [1, 1],
-    [NumberChar.ZERO]: [1, 1],
-    [NumberChar.ONE]: [1, 1],
-    [NumberChar.TWO]: [1, 1],
-    [NumberChar.THREE]: [1, 1],
-    [NumberChar.FOUR]: [1, 1],
-    [NumberChar.FIVE]: [1, 1],
-    [NumberChar.SIX]: [1, 1],
-    [NumberChar.SEVEN]: [1, 1],
-    [NumberChar.EIGHT]: [1, 1],
-    [NumberChar.NINE]: [1, 1],
+  [Letter.KAGYI]: [0.9, 0.9],
+  [Letter.KHAGWE]: [0.6, 0.6],
+  [Letter.GANGE]: [1, 1],
+  [Letter.GHAGYI]: [1, 1],
+  [Letter.NGA]: [1, 1],
+  [Letter.SALONE]: [1, 1],
+  [Letter.SALEIN]: [1, 1],
+  [Letter.ZAGWE]: [1, 1],
+  [Letter.ZAMYINZWE]: [1, 1],
+  [Letter.NYA]: [1, 1],
+  [Letter.NNYA]: [1, 1],
+  [Letter.TTA]: [1, 1],
+  [Letter.TTHA]: [1, 1],
+  [Letter.DDA]: [1, 1],
+  [Letter.DDHA]: [1, 1],
+  [Letter.NNA]: [1, 1],
+  [Letter.TA]: [1, 1],
+  [Letter.THA]: [1, 1],
+  [Letter.DA]: [1, 1],
+  [Letter.DHA]: [1, 1],
+  [Letter.NA]: [1, 1],
+  [Letter.PA]: [1, 1],
+  [Letter.PHA]: [1, 1],
+  [Letter.BA]: [1, 1],
+  [Letter.BHA]: [1, 1],
+  [Letter.MA]: [1, 1],
+  [Letter.YA]: [1, 1],
+  [Letter.RA]: [1, 1],
+  [Letter.LA]: [1, 1],
+  [Letter.WA]: [1, 1],
+  [Letter.SA]: [1, 1],
+  [Letter.HA]: [1, 1],
+  [Letter.LLA]: [1, 1],
+  [Letter.A]: [1, 1],
+  [NumberChar.ZERO]: [1, 1],
+  [NumberChar.ONE]: [1, 1],
+  [NumberChar.TWO]: [1, 1],
+  [NumberChar.THREE]: [1, 1],
+  [NumberChar.FOUR]: [1, 1],
+  [NumberChar.FIVE]: [1, 1],
+  [NumberChar.SIX]: [1, 1],
+  [NumberChar.SEVEN]: [1, 1],
+  [NumberChar.EIGHT]: [1, 1],
+  [NumberChar.NINE]: [1, 1],
 };
