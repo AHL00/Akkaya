@@ -36,8 +36,7 @@ export const importFromSvg = (svg: string): CharacterPath => {
         height = height.slice(0, -2);
     }
 
-    // Parse the floats
-    width = parseFloat(width);
+    // Parse the floatsTransform
     height = parseFloat(height);
 
     let svg_els = svg_json["_j"]["children"];

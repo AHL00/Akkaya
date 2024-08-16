@@ -18,7 +18,7 @@ export default function DrawPage() {
       </ThemedText>
       <DrawingCanvas
         char={char}
-        lineWidth={40}
+        lineWidth={0.085}
         svgModuleId={characterSvgs[char]}
         pathSvgModuleId={characterPathSvgs[char]}
       ></DrawingCanvas>

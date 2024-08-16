@@ -15,6 +15,7 @@ import { ThemedText } from "./ThemedText";
 
 type DrawingCanvasProps = {
   char: Character;
+  /// As a percentage of the screen width
   lineWidth: number;
   svgModuleId: number | string;
   pathSvgModuleId: number | string;
@@ -34,7 +35,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
   const [currentPoints, setCurrentPoints] = useState<
     { x: number; y: number }[]
   >([]);
-  const lineWidth = props.lineWidth ? props.lineWidth : 20;
+  const lineWidth = props.lineWidth ? props.lineWidth : 0.03;
   const canvasRef = useRef<View>(null);
   const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 });
   const trackingSvgRef = useRef<Svg>(null);
@@ -285,7 +286,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
         new_stroke.push({
           x: point.x * ratio,
           y: point.y * ratio,
-          radius: point.radius * ratio * 2.5,
+          radius: point.radius * ratio * 2,
         });
       }
       new_path.push(new_stroke);
@@ -314,7 +315,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
               key={index}
               d={path}
               stroke="black"
-              strokeWidth={lineWidth}
+              strokeWidth={lineWidth * dimensions.width}
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -330,7 +331,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
                 })
                 .join(" ")}
               stroke="black"
-              strokeWidth={lineWidth}
+              strokeWidth={lineWidth * dimensions.width}
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
