@@ -10,7 +10,7 @@ export default function ParallaxScrollView({ children }: PropsWithChildren<{}>) 
     const scrollOffset = useScrollViewOffset(scrollRef);
 
     return (
-        <ThemedView style={styles.container}>
+        <ThemedView style={styles.container} safeArea={true}>
             <Animated.ScrollView ref={scrollRef} scrollEventThrottle={16}>
                 <ThemedView style={styles.content}>{children}</ThemedView>
             </Animated.ScrollView>
@@ -22,13 +22,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    header: {
-        height: 250,
-        overflow: 'hidden',
-    },
     content: {
         flex: 1,
-        padding: 32,
+        padding: 16,
         gap: 16,
         overflow: 'hidden',
     },

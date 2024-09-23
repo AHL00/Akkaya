@@ -5,14 +5,14 @@ import { characterPathSvg as characterPathSvgs, characterSvgs } from "@/constant
 import { Letter } from "@/constants/Letters";
 import { useLocalSearchParams } from "expo-router";
 import { StyleSheet } from "react-native";
-
+    
 export default function DrawPage() {
   const { slug } = useLocalSearchParams();
   // @ts-ignore
   let char: Letter = slug;
 
   return (
-    <ThemedView style={styles.container}>
+    <ThemedView style={styles.container} safeArea={false}>
       <ThemedText style={styles.title} type="title">
         Draw the letter {slug}
       </ThemedText>

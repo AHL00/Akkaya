@@ -40,24 +40,24 @@ export default function HomeScreen() {
   }, []);
 
   return (
-    <ParallaxScrollView>
-      <ThemedText type="title">Hello, World!</ThemedText>
-      <View style={styles.gridContainer}>
-        {charSvgs.map((charSvg, index) => (
-          <Link
-            key={index}
-            asChild
-            push
-            href={{ pathname: "/draw/[slug]", params: { slug: charSvg[0] } }}
-          >
-            <Pressable style={styles.gridItem}>
-              <SvgXml xml={charSvg[1]} width="80%" height="50%" />
-              <ThemedText type="subtitle">{`Draw ${charSvg[0]}`}</ThemedText>
-            </Pressable>
-          </Link>
-        ))}
-      </View>
-    </ParallaxScrollView>
+      <ParallaxScrollView>
+        <ThemedText type="title">Burmese Handwriting</ThemedText>
+        <View style={styles.gridContainer}>
+          {charSvgs.map((charSvg, index) => (
+            <Link
+              key={index}
+              asChild
+              push
+              href={{ pathname: "/draw/[slug]", params: { slug: charSvg[0] } }}
+            >
+              <Pressable style={styles.gridItem}>
+                <SvgXml xml={charSvg[1]} width="80%" height="50%" />
+                <ThemedText type="subtitle">{`Draw ${charSvg[0]}`}</ThemedText>
+              </Pressable>
+            </Link>
+          ))}
+        </View>
+      </ParallaxScrollView>
   );
 }
 
