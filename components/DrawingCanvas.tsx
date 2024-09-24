@@ -57,7 +57,15 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
   const [currentPoints, setCurrentPoints] = useState<
     { x: number; y: number }[]
   >([]);
+
+
+  const detectionRadiusCoeff = 1.25;
+  /// Multiplied by screen width
+  const pathVeerLimit = 0.05;
   const lineWidth = props.lineWidth ? props.lineWidth : 0.03;
+  const debugPathCircles = true;
+
+
   const canvasRef = useRef<View>(null);
   const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 });
   const trackingSvgRef = useRef<Svg>(null);
@@ -166,7 +174,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
       if (startedStroke) {
         startedStroke = false;
 
-        if (distance < currentPoint.radius) {
+        if (distance < currentPoint.radius * detectionRadiusCoeff) {
           if (trackingState.checkpointIndex > 0) {
             console.warn("Stroke started too far along the path");
           } else {
@@ -183,7 +191,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
         return;
       }
 
-      if (distance < currentPoint.radius) {
+      if (distance < currentPoint.radius * detectionRadiusCoeff) {
         if (trackingState.checkpointIndex === 0) {
           console.warn("First checkpoint reached during stroke");
           return;
@@ -227,6 +235,15 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
           trackingState.finishedStrokesSmoothed.push(
             smooth(strokeToPointsArr(currentStroke))
           );
+        }
+
+        if (
+          distance >
+          currentPoint.radius * detectionRadiusCoeff +
+            pathVeerLimit * dimensions.width
+        ) {
+          console.warn("Path veered too far from the checkpoint");
+          return;
         }
       }
 
@@ -488,21 +505,28 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
                 })
                 .join(" ")}
               stroke="black"
-              strokeWidth={lineWidth * dimensions.width} 
+              strokeWidth={lineWidth * dimensions.width}
               fill="none"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
           ))}
 
+          {trackingState.nextStroke && debugPathCircles &&
+            // Draw circles for each point
+            trackingState.nextStroke.map((point, index) => (
+              <Circle
+                key={index}
+                cx={point.x}
+                cy={point.y}
+                r={point.radius * detectionRadiusCoeff}
+                stroke="red"
+                strokeWidth={0.005 * dimensions.width}
+                fill="none"
+              />
+            ))}
+
           {trackingState.nextPoint && (
-            // <Circle
-            //   cx={trackingState.nextPoint.x}
-            //   cy={trackingState.nextPoint.y}
-            //   r={trackingState.nextPoint.radius}
-            //   fill="red"
-            //   fillRule="nonzero"
-            // />
             // Cross
             <>
               <Path
