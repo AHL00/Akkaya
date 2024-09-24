@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   title: {
     position: "absolute",
-    top: 20,
+    top: 200,
     marginHorizontal: "auto",
   },
 });
