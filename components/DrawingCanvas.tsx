@@ -59,7 +59,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
   >([]);
 
 
-  const detectionRadiusCoeff = 1.25;
+  const detectionRadiusCoeff = 1.4;
   /// Multiplied by screen width
   const pathVeerLimit = 0.05;
   const lineWidth = props.lineWidth ? props.lineWidth : 0.03;
