@@ -514,6 +514,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
 
           {trackingState.nextStroke && debugPathCircles &&
             // Draw circles for each point
+            trackingState.completedStrokeCount < trackingState.transformedPath[0].length &&
             trackingState.nextStroke.map((point, index) => (
               <Circle
                 key={index}
@@ -526,7 +527,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
               />
             ))}
 
-          {trackingState.nextPoint && (
+          {trackingState.nextPoint && trackingState.completedStrokeCount < trackingState.transformedPath[0].length && (
             // Cross
             <>
               <Path
