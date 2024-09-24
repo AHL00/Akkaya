@@ -195,7 +195,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
           return;
         }
 
-        console.log("Checkpoint", trackingState.checkpointIndex);
+        // console.log("Checkpoint", trackingState.checkpointIndex);
         trackingState.checkpointIndex += 1;
         trackingState.lastPoint = currentPoint;
         if (
@@ -268,23 +268,13 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
   const [svgContent, setSvgContent] = useState<string | null>(null);
 
   useEffect(() => {
-    const loadSvg = async () => {
-      try {
-        const [{ localUri }] = await Asset.loadAsync(props.svgModuleId);
-
-        if (!localUri) {
-          throw new Error("Failed to load SVG file");
-        }
-
-        const content = await FileSystem.readAsStringAsync(localUri);
-
-        setSvgContent(content);
-      } catch (error) {
-        console.error("Error reading SVG file:", error);
-      }
-    };
-
-    loadSvg();
+    loadAsset(props.pathSvgModuleId)
+        .then((data) => {
+            setSvgContent(data);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
   }, [props.svgModuleId]);
 
   useEffect(() => {
