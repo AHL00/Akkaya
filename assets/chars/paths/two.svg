@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <svg viewBox="0 0 60.701 102.201" width="60.701px" height="102.201px" xmlns="http://www.w3.org/2000/svg">
-  <g id="svgGroup" stroke-linecap="round" fill-rule="nonzero" font-size="9pt" stroke="#000" stroke-width="0.25mm" fill="none" style="stroke:#000;stroke-width:0.25mm;fill:none" transform="matrix(1, 0, 0, 1, 0, -3.552713678800501e-15)">
-    <path d="M 0 72.5 L 0 72.1 L 14.6 72.1 L 14.6 72.4 A 29.866 29.866 0 0 0 14.976 77.315 Q 15.41 79.907 16.343 81.954 A 12.657 12.657 0 0 0 18.9 85.7 A 14.413 14.413 0 0 0 26.925 89.731 A 20.364 20.364 0 0 0 30.3 90 A 19.75 19.75 0 0 0 35.292 89.402 A 14.156 14.156 0 0 0 41.8 85.75 Q 45.108 82.481 45.871 76.341 A 32.001 32.001 0 0 0 46.1 72.4 L 46.1 0 L 60.7 0 L 60.7 72.4 Q 60.7 86.6 52.8 94.4 A 25.82 25.82 0 0 1 41.163 100.913 Q 36.409 102.2 30.6 102.2 Q 19.712 102.2 12.558 98.059 A 23.812 23.812 0 0 1 7.9 94.55 A 24.609 24.609 0 0 1 1.406 83.449 Q 0.264 79.489 0.049 74.736 A 49.669 49.669 0 0 1 0 72.5 Z" vector-effect="non-scaling-stroke"/>
-  </g>
   <ellipse style="fill: rgb(216, 216, 216); fill-opacity: 0; paint-order: stroke; stroke: rgb(33, 61, 186); transform-origin: 52.72px 10.247px;" cx="53.136" cy="6.857" rx="7.141" ry="6.445"/>
   <ellipse style="fill: rgb(216, 216, 216); fill-opacity: 0; paint-order: stroke; stroke: rgb(33, 61, 186); transform-origin: 52.912px 17.572px;" cx="53.328" cy="14.182" rx="7.141" ry="6.445"/>
   <ellipse style="fill: rgb(216, 216, 216); fill-opacity: 0; paint-order: stroke; stroke: rgb(33, 61, 186); transform-origin: 53.028px 26.01px;" cx="53.444" cy="22.62" rx="7.141" ry="6.445"/>
