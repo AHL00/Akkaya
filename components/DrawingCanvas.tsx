@@ -442,7 +442,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
           {trackingState.nextStrokeSmoothed &&
             trackingState.nextStrokeSmoothed.length > 1 &&
             trackingState.completedStrokeCount <
-              trackingState.transformedPath.length && (
+              trackingState.transformedPath[0].length && (
               <Path
                 d={trackingState.nextStrokeSmoothed
                   .map((point, index) => {
@@ -466,7 +466,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
           {trackingState.nextStrokeSmoothed &&
             trackingState.nextStrokeSmoothed.length > 1 &&
             trackingState.completedStrokeCount <
-              trackingState.transformedPath.length &&
+              trackingState.transformedPath[0].length &&
             (() => {
               const points = trackingState.nextStrokeSmoothed.slice(-2);
 
