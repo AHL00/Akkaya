@@ -62,7 +62,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
   /// Multiplied by screen width
   const pathVeerLimit = 0.05;
   const lineWidth = props.lineWidth ? props.lineWidth : 0.03;
-  const debugPathCircles = true;
+  const debugPathCircles = false;
 
   const canvasRef = useRef<View>(null);
   const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 });
@@ -268,7 +268,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
   const [svgContent, setSvgContent] = useState<string | null>(null);
 
   useEffect(() => {
-    loadAsset(props.pathSvgModuleId)
+    loadAsset(props.svgModuleId)
         .then((data) => {
             setSvgContent(data);
         })
@@ -557,7 +557,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
           xml={svgContent}
           width={dimensions.width * (charScale[0] - margin)}
           height={dimensions.height * (charScale[1] - margin)}
-          opacity={0.1}
+          opacity={0.25}
         />
       )}
     </View>
