@@ -58,13 +58,11 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
     { x: number; y: number }[]
   >([]);
 
-
   const detectionRadiusCoeff = 1.4;
   /// Multiplied by screen width
   const pathVeerLimit = 0.05;
   const lineWidth = props.lineWidth ? props.lineWidth : 0.03;
-  const debugPathCircles = true;
-
+  const debugPathCircles = false;
 
   const canvasRef = useRef<View>(null);
   const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 });
@@ -360,7 +358,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
     ];
   };
 
-  const crossLength = 0.02 * dimensions.width;
+  const guidePointSize = 0.015 * dimensions.width;
 
   return (
     <View
@@ -385,8 +383,8 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
             <Path
               d={currentPoints
                 .map((point, index) => {
-                  const adjustedX = point.x - canvasPosition.x;
-                  const adjustedY = point.y - canvasPosition.y;
+                  const adjustedX = point.x;
+                  const adjustedY = point.y;
                   return index === 0
                     ? `M${adjustedX},${adjustedY}`
                     : `L${adjustedX},${adjustedY}`;
@@ -420,32 +418,47 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
               trackingState.transformedPath[1][0])
           }
         >
-          {
-            // <ThemedText>
-            //   {trackingState.nextStrokeSmoothed &&
-            //     trackingState.nextStrokeSmoothed.length}{" "}
-            //   points
-            // </ThemedText>
-            trackingState.nextStrokeSmoothed &&
-              trackingState.nextStrokeSmoothed.length > 1 && (
-                <Path
-                  d={trackingState.nextStrokeSmoothed
-                    .map((point, index) => {
-                      return index === 0
-                        ? // @ts-ignore
-                          `M${point[0]},${point[1]}`
-                        : // @ts-ignore
-                          `L${point[0]},${point[1]}`;
-                    })
-                    .join(" ")}
-                  stroke="#aaaaaa"
-                  strokeWidth={0.01 * dimensions.width} // Adjust the stroke width as needed
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              )
-          }
+          {/*Draw finished strokes in black, these will be the perfect guide versions*/}
+          {trackingState.finishedStrokesSmoothed.map((stroke, index) => (
+            <Path
+              key={index}
+              d={stroke
+                .map((point, index) => {
+                  return index === 0
+                    ? // @ts-ignore
+                      `M${point[0]},${point[1]}`
+                    : // @ts-ignore
+                      `L${point[0]},${point[1]}`;
+                })
+                .join(" ")}
+              stroke="black"
+              strokeWidth={lineWidth * dimensions.width}
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          ))}
+
+          {trackingState.nextStrokeSmoothed &&
+            trackingState.nextStrokeSmoothed.length > 1 && (
+              <Path
+                d={trackingState.nextStrokeSmoothed
+                  .map((point, index) => {
+                    return index === 0
+                      ? // @ts-ignore
+                        `M${point[0]},${point[1]}`
+                      : // @ts-ignore
+                        `L${point[0]},${point[1]}`;
+                  })
+                  .join(" ")}
+                stroke="#aaaaaa"
+                strokeWidth={0.01 * dimensions.width} // Adjust the stroke width as needed
+                fill="none"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            )}
+
           {/*Draw an arrow at the last point pointing in the direction of the
           last two points*/}
           {trackingState.nextStrokeSmoothed &&
@@ -491,30 +504,10 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
               );
             })()}
 
-          {/*Draw finished strokes in black, these will be the perfect guide versions*/}
-          {trackingState.finishedStrokesSmoothed.map((stroke, index) => (
-            <Path
-              key={index}
-              d={stroke
-                .map((point, index) => {
-                  return index === 0
-                    ? // @ts-ignore
-                      `M${point[0]},${point[1]}`
-                    : // @ts-ignore
-                      `L${point[0]},${point[1]}`;
-                })
-                .join(" ")}
-              stroke="black"
-              strokeWidth={lineWidth * dimensions.width}
-              fill="none"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          ))}
-
-          {trackingState.nextStroke && debugPathCircles &&
-            // Draw circles for each point
-            trackingState.completedStrokeCount < trackingState.transformedPath[0].length &&
+          {trackingState.nextStroke &&
+            debugPathCircles &&
+            trackingState.completedStrokeCount <
+              trackingState.transformedPath[0].length &&
             trackingState.nextStroke.map((point, index) => (
               <Circle
                 key={index}
@@ -527,29 +520,40 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
               />
             ))}
 
-          {trackingState.nextPoint && trackingState.completedStrokeCount < trackingState.transformedPath[0].length && (
-            // Cross
-            <>
-              <Path
-                d={`M${trackingState.nextPoint.x - crossLength},${
-                  trackingState.nextPoint.y - crossLength
-                } L${trackingState.nextPoint.x + crossLength},${
-                  trackingState.nextPoint.y + crossLength
-                }`}
-                stroke="green"
-                strokeWidth={0.005 * dimensions.width}
+          {trackingState.nextPoint &&
+            trackingState.completedStrokeCount <
+              trackingState.transformedPath[0].length && (
+              // Cross
+              // <>
+              //   <Path
+              //     d={`M${trackingState.nextPoint.x - crossLength},${
+              //       trackingState.nextPoint.y - crossLength
+              //     } L${trackingState.nextPoint.x + crossLength},${
+              //       trackingState.nextPoint.y + crossLength
+              //     }`}
+              //     stroke="green"
+              //     strokeWidth={0.005 * dimensions.width}
+              //   />
+              //   <Path
+              //     d={`M${trackingState.nextPoint.x - crossLength},${
+              //       trackingState.nextPoint.y + crossLength
+              //     } L${trackingState.nextPoint.x + crossLength},${
+              //       trackingState.nextPoint.y - crossLength
+              //     }`}
+              //     stroke="green"
+              //     strokeWidth={0.005 * dimensions.width}
+              //   />
+              // </>
+              // Circle
+              <Circle
+                cx={trackingState.nextPoint.x}
+                cy={trackingState.nextPoint.y}
+                r={guidePointSize}
+                stroke="#aaaaaa"
+                strokeWidth={0.0075 * dimensions.width}
+                fill="none"
               />
-              <Path
-                d={`M${trackingState.nextPoint.x - crossLength},${
-                  trackingState.nextPoint.y + crossLength
-                } L${trackingState.nextPoint.x + crossLength},${
-                  trackingState.nextPoint.y - crossLength
-                }`}
-                stroke="green"
-                strokeWidth={0.005 * dimensions.width}
-              />
-            </>
-          )}
+            )}
         </Svg>
       )}
 
@@ -559,6 +563,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
           xml={svgContent}
           width={dimensions.width * (charScale[0] - margin)}
           height={dimensions.height * (charScale[1] - margin)}
+          opacity={0.1}
         />
       )}
     </View>
