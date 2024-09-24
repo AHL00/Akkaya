@@ -60,8 +60,8 @@ export const characterSvgs: Record<Character, number | string> = {
 
 export const characterPathSvg: Record<Character, number | string> = {
   [Letter.A]: require("@/assets/chars/paths/a.svg"),
-  [Letter.KAGYI]: require("@/assets/chars/paths/a.svg"),
-  [Letter.KHAGWE]: require("@/assets/chars/paths/a.svg"),
+  [Letter.KAGYI]: require("@/assets/chars/paths/kagyi.svg"),
+  [Letter.KHAGWE]: require("@/assets/chars/paths/khagwe.svg"),
   [Letter.GANGE]: require("@/assets/chars/paths/gange.svg"),
   [Letter.GHAGYI]: require("@/assets/chars/paths/ghagyi.svg"),
   [Letter.NGA]: require("@/assets/chars/paths/a.svg"),
@@ -91,7 +91,7 @@ export const characterPathSvg: Record<Character, number | string> = {
   [Letter.LA]: require("@/assets/chars/paths/a.svg"),
   [Letter.WA]: require("@/assets/chars/paths/a.svg"),
   [Letter.SA]: require("@/assets/chars/paths/a.svg"),
-  [Letter.HA]: require("@/assets/chars/paths/a.svg"),
+  [Letter.HA]: require("@/assets/chars/paths/ha.svg"),
   [Letter.LLA]: require("@/assets/chars/paths/a.svg"),
   [NumberChar.ZERO]: require("@/assets/chars/paths/a.svg"),
   [NumberChar.ONE]: require("@/assets/chars/paths/a.svg"),
