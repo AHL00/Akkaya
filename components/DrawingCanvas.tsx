@@ -62,7 +62,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
   /// Multiplied by screen width
   const pathVeerLimit = 0.05;
   const lineWidth = props.lineWidth ? props.lineWidth : 0.03;
-  const debugPathCircles = false;
+  const debugPathCircles = true;
 
   const canvasRef = useRef<View>(null);
   const [canvasPosition, setCanvasPosition] = useState({ x: 0, y: 0 });
@@ -440,7 +440,9 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
           ))}
 
           {trackingState.nextStrokeSmoothed &&
-            trackingState.nextStrokeSmoothed.length > 1 && (
+            trackingState.nextStrokeSmoothed.length > 1 &&
+            trackingState.completedStrokeCount <
+              trackingState.transformedPath.length && (
               <Path
                 d={trackingState.nextStrokeSmoothed
                   .map((point, index) => {
@@ -463,6 +465,8 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
           last two points*/}
           {trackingState.nextStrokeSmoothed &&
             trackingState.nextStrokeSmoothed.length > 1 &&
+            trackingState.completedStrokeCount <
+              trackingState.transformedPath.length &&
             (() => {
               const points = trackingState.nextStrokeSmoothed.slice(-2);
 
