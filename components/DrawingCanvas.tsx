@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { View, StyleSheet, PanResponder, Dimensions } from "react-native";
 import Svg, {
   Circle,
+  Line,
   Path,
   Polygon,
   RadialGradient,
@@ -50,6 +51,40 @@ function strokeToPointsArr(stroke: PathCheckpoint[]): number[][] {
   return stroke.map((point) => {
     return [point.x, point.y];
   });
+}
+
+function calculateTangentFromStroke(
+  stroke: Stroke,
+  index: number
+): [number, number] {
+  let point = stroke[index];
+  let nextPoint = stroke[index + 1];
+
+    if (nextPoint == null) {
+      if (point == null) {
+          throw new Error("Both point and nextPoint are null");
+      }
+
+      nextPoint = point;
+      point = stroke[index - 1];
+    }
+
+  const dx = nextPoint.x - point.x;
+  const dy = nextPoint.y - point.y;
+
+  const length = Math.sqrt(dx * dx + dy * dy);
+
+  return [dx / length, dy / length];
+}
+
+function rotate2DVector(
+  vector: [number, number],
+  angle: number
+): [number, number] {
+  return [
+    vector[0] * Math.cos(angle) - vector[1] * Math.sin(angle),
+    vector[0] * Math.sin(angle) + vector[1] * Math.cos(angle),
+  ];
 }
 
 const DrawingCanvas = (props: DrawingCanvasProps) => {
@@ -269,12 +304,12 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
 
   useEffect(() => {
     loadAsset(props.svgModuleId)
-        .then((data) => {
-            setSvgContent(data);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+      .then((data) => {
+        setSvgContent(data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, [props.svgModuleId]);
 
   useEffect(() => {
@@ -468,23 +503,25 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
               const dy = y2 - y1;
               const angle = Math.atan2(dy, dx);
 
-              const arrowLength = 0.04 * dimensions.width;
+              const arrowLength = 0.02 * dimensions.width;
               const arrowWidth = 0.02 * dimensions.width;
 
+              const tipOffset = 0.01 * dimensions.width;
+
               const tip = [
-                x2 + arrowLength * Math.cos(angle),
-                y2 + arrowLength * Math.sin(angle),
+                x2 + tipOffset * Math.cos(angle),
+                y2 + tipOffset * Math.sin(angle),
               ];
 
               const base1 = [
-                x2 + arrowWidth * Math.cos(angle + Math.PI / 2),
-                y2 + arrowWidth * Math.sin(angle + Math.PI / 2),
-              ];
-
-              const base2 = [
-                x2 + arrowWidth * Math.cos(angle - Math.PI / 2),
-                y2 + arrowWidth * Math.sin(angle - Math.PI / 2),
-              ];
+                x2 - arrowLength * Math.cos(angle) + arrowWidth * Math.cos(angle + Math.PI / 2),
+                y2 - arrowLength * Math.sin(angle) + arrowWidth * Math.sin(angle + Math.PI / 2),
+            ];
+    
+            const base2 = [
+                x2 - arrowLength * Math.cos(angle) + arrowWidth * Math.cos(angle - Math.PI / 2),
+                y2 - arrowLength * Math.sin(angle) + arrowWidth * Math.sin(angle - Math.PI / 2),
+            ];    
 
               return (
                 <Polygon
@@ -514,7 +551,7 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
               />
             ))}
 
-          {trackingState.nextPoint &&
+          {/* {trackingState.nextPoint &&
             trackingState.completedStrokeCount <
               trackingState.transformedPath[0].length && (
               // Cross
@@ -538,16 +575,93 @@ const DrawingCanvas = (props: DrawingCanvasProps) => {
               //     strokeWidth={0.005 * dimensions.width}
               //   />
               // </>
+
               // Circle
+            //   <Circle
+            //     cx={trackingState.nextPoint.x}
+            //     cy={trackingState.nextPoint.y}
+            //     r={guidePointSize}
+            //     stroke="#aaaaaa"
+            //     strokeWidth={0.0075 * dimensions.width}
+            //     fill="none"
+            //   />
+
+            //   Arrow in the direction of the next point
+                <>
+                    
+                </>
+
+            )} */}
+
+          {/* If at the start or end of the current stroke, draw a circle. If at the end, draw an arrow pointing in the tangent calculated using the calculateTangentFromStroke(stroke: Stroke, index: number) function */}
+          {/*trackingState.nextPoint &&
+            trackingState.completedStrokeCount <
+              trackingState.transformedPath[0].length &&
+            (trackingState.checkpointIndex === 0 ||
+              trackingState.checkpointIndex ===
+                trackingState.transformedPath![0][
+                  trackingState.completedStrokeCount
+                ].length -
+                  1) &&
+            trackingState.completedStrokeCount <
+              trackingState.transformedPath![0].length && (
               <Circle
-                cx={trackingState.nextPoint.x}
-                cy={trackingState.nextPoint.y}
+                cx={trackingState.nextPoint!.x}
+                cy={trackingState.nextPoint!.y}
                 r={guidePointSize}
                 stroke="#aaaaaa"
                 strokeWidth={0.0075 * dimensions.width}
                 fill="none"
               />
-            )}
+            )*/}
+          {/* If in one of the middle points, draw an arrow */}
+          {trackingState.nextPoint &&
+            trackingState.completedStrokeCount <
+              trackingState.transformedPath[0].length &&
+            (() => {
+              const tangent = calculateTangentFromStroke(
+                trackingState.transformedPath[0][
+                  trackingState.completedStrokeCount
+                ],
+                trackingState.checkpointIndex
+              );
+              const arrowLength = 0.035 * dimensions.width;
+              const arrowWidth = 0.009;
+
+              let vector1 = rotate2DVector(
+                [tangent[0] * arrowLength, tangent[1] * arrowLength],
+                Math.PI / 4
+              );
+
+              let vector2 = rotate2DVector(
+                [tangent[0] * arrowLength, tangent[1] * arrowLength],
+                -Math.PI / 4
+              );
+
+              let arrowTipX = trackingState.nextPoint!.x;
+              let arrowTipY = trackingState.nextPoint!.y;
+
+              return (
+                <>
+                  <Line
+                    x1={arrowTipX}
+                    y1={arrowTipY}
+                    x2={arrowTipX - vector1[0]}
+                    y2={arrowTipY - vector1[1]}
+                    stroke="#aaaaaa"
+                    strokeWidth={arrowWidth * dimensions.width}
+                  />
+                  <Line
+                    x1={arrowTipX}
+                    y1={arrowTipY}
+                    x2={arrowTipX - vector2[0]}
+                    y2={arrowTipY - vector2[1]}
+                    stroke="#aaaaaa"
+                    strokeWidth={arrowWidth * dimensions.width}
+                  />
+                </>
+              );
+            })()}
         </Svg>
       )}
 
