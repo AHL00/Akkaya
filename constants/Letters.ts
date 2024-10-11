@@ -33,13 +33,13 @@ export enum Letter {
     HA = "ဟ",
     LLA = "ဠ",
     A = "အ",
-    // I = "ဣ",
-    // II = "ဤ",
-    // U = "ဥ",
-    // UU = "ဦ",
-    // E = "ဧ",
-    // O = "ဩ",
-    // AU = "ဪ",
+
+
+    II = "ဤ",
+    U = "ဥ",
+    E = "ဧ",
+    GREAT_SA = "ဿ",
+
     // ANUSVARA = "ံ",
     // VISARGA = "း",
     // VIRAMA = "်",
@@ -48,5 +48,4 @@ export enum Letter {
     // MEDIAL_RA = "ြ",
     // MEDIAL_WA = "ွ",
     // MEDIAL_HA = "ှ",
-    // GREAT_SA = "ဿ",
 }

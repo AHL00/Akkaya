@@ -2,6 +2,7 @@ import DrawingCanvas from "@/components/DrawingCanvas";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { characterPathSvg as characterPathSvgs, characterSvgs } from "@/constants/Character";
+import { Colors } from "@/constants/Colors";
 import { Letter } from "@/constants/Letters";
 import { useLocalSearchParams } from "expo-router";
 import { StyleSheet } from "react-native";
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
     padding: 0,
     height: "100%",
-  },
+},
   title: {
     position: "absolute",
     top: 200,

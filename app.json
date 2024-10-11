@@ -1,17 +1,12 @@
 {
   "expo": {
-    "name": "burmese-handwriting",
-    "slug": "burmese-handwriting",
+    "name": "akkaya",
+    "slug": "akkaya",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "myapp",
+    "scheme": "akkaya",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "jsEngine": "hermes",
     "ios": {
       "supportsTablet": true
@@ -21,7 +16,7 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.ahloo.burmesehandwriting"
+      "package": "com.ahloo.akkaya"
     },
     "plugins": [
       "expo-router",
