@@ -5,3 +5,14 @@ An app to help people learn the proper way to learn to write the Burmese alphabe
 
 ## Screenshots
 TODO
+
+
+## Members
+### Khant Htet Aung
+Lead developer
+### Thura Tun
+Developer + Website developer
+### Myat Htet Ko
+Developer
+### Myint Mo Maung Maung
+Public relations
